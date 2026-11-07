@@ -1,0 +1,23 @@
+{
+  "$comment": "本项目原创补充翻译（MIT），优先级高于 frontend/dynamic/desktop.json。",
+  "frontend": {},
+  "dynamic": {
+    "gRa9I5BFc2": "Opus 消耗用量額度的速度比其他模型更快"
+  },
+  "desktop": {
+    "+VSDC8gOTV": "允許",
+    "PURUKKgKrZ": "允許",
+    "BnWf4XxA8q": "取消",
+    "sjooELB2Xx": "不允許",
+    "3i8Zer9iei": "這則訊息傳送時未連接你的 MCP 伺服器。如需使用，請在連接後重新傳送。",
+    "9TR4YtyqE5": "這包括這部電腦上的應用程式。",
+    "KBDNFHPOy5": "這部電腦上的其他設定阻止了它開啟——可能是機構的政策，或此處無法使用的瀏覽器元件。",
+    "NVxEEGuaiZ": "允許「{host}」連接到你本地網絡上的裝置嗎？",
+    "Q+5mw8QUSp": "請稍後再試。",
+    "RhhukjaznP": "Claude 無法在雲端工作階段中使用瀏覽器",
+    "ZVyxetGVx4": "在雲端工作階段中使用瀏覽器…",
+    "cTEQB9UQ2e": "允許 Claude 在雲端工作階段中使用這部電腦上的瀏覽器嗎？",
+    "iDJ3+VYrG5": "此設定適用於你在這部電腦上使用的所有 Claude 帳戶。雲端工作階段會接收來自任何已登入你 Claude 帳戶之裝置的訊息。",
+    "sXfMPfBaYy": "{pct} · {when}重設"
+  }
+}

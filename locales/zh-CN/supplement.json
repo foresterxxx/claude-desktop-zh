@@ -1,0 +1,23 @@
+{
+  "$comment": "本项目原创补充翻译（MIT），优先级高于 frontend/dynamic/desktop.json。",
+  "frontend": {},
+  "dynamic": {
+    "gRa9I5BFc2": "Opus 消耗用量额度的速度比其他模型更快"
+  },
+  "desktop": {
+    "+VSDC8gOTV": "允许",
+    "PURUKKgKrZ": "允许",
+    "BnWf4XxA8q": "取消",
+    "sjooELB2Xx": "不允许",
+    "3i8Zer9iei": "这条消息发送时未连接你的 MCP 服务器。如需使用，请在连接后重新发送。",
+    "9TR4YtyqE5": "这包括这台电脑上的应用。",
+    "KBDNFHPOy5": "这台电脑上的其他设置阻止了它开启——可能是组织的策略，或此处不可用的浏览器组件。",
+    "NVxEEGuaiZ": "允许“{host}”连接到你本地网络上的设备吗？",
+    "Q+5mw8QUSp": "请稍后再试。",
+    "RhhukjaznP": "Claude 无法在云端会话中使用浏览器",
+    "ZVyxetGVx4": "在云端会话中使用浏览器…",
+    "cTEQB9UQ2e": "允许 Claude 在云端会话中使用这台电脑上的浏览器吗？",
+    "iDJ3+VYrG5": "此设置适用于你在这台电脑上使用的所有 Claude 账号。云端会话会接收来自任何已登录你 Claude 账号的设备的消息。",
+    "sXfMPfBaYy": "{pct} · {when}重置"
+  }
+}

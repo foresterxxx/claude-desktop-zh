@@ -1,0 +1,7 @@
+* text=auto eol=lf
+# Windows 脚本按原样（CRLF，ps1 带 BOM）存储，保证 git archive / GitHub “Download ZIP” 得到的文件可直接运行
+*.bat -text
+*.cmd -text
+*.ps1 -text
+*.png binary
+locales/**/*.json linguist-generated=true

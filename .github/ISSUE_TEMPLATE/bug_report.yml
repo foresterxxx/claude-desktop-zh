@@ -1,0 +1,36 @@
+name: 问题反馈
+description: 安装失败、界面异常、功能不可用等
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Claude Desktop 版本
+      placeholder: 例如 4.4212.0
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: 操作系统
+      options: [Windows 11, Windows 10, macOS, Linux]
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: 使用模式
+      options: [官方账号登录, 第三方 API（网关 / Bedrock / Vertex）, 不确定]
+  - type: textarea
+    id: status
+    attributes:
+      label: status 输出
+      description: 运行 `node bin/claude-zh.js status` 并粘贴结果
+      render: text
+  - type: textarea
+    id: log
+    attributes:
+      label: 报错信息 / 复现步骤
+      description: 设置环境变量 CLAUDE_ZH_DEBUG=1 后重新运行可以得到完整调用栈；界面问题请附截图
+    validations:
+      required: true

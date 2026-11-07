@@ -1,0 +1,24 @@
+name: 翻译问题
+description: 错译、漏译、用词不统一
+labels: [translation]
+body:
+  - type: dropdown
+    id: lang
+    attributes:
+      label: 语言
+      options: [简体中文 zh-CN, 繁體中文（台灣）zh-TW, 繁體中文（香港）zh-HK]
+    validations:
+      required: true
+  - type: textarea
+    id: where
+    attributes:
+      label: 位置与截图
+      description: 在哪个界面看到的？最好附截图
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 当前译文 → 建议译文
+    validations:
+      required: true

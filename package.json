@@ -1,0 +1,40 @@
+{
+  "name": "claude-desktop-zh",
+  "version": "1.0.0",
+  "description": "Claude Desktop 中文界面补丁（简体中文 / 繁體中文），零依赖、可一键恢复",
+  "license": "MIT",
+  "bin": {
+    "claude-zh": "bin/claude-zh.js"
+  },
+  "main": "src/patcher.js",
+  "files": [
+    "bin/",
+    "src/",
+    "locales/",
+    "scripts/",
+    "LICENSE",
+    "NOTICE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "coverage": "node bin/claude-zh.js coverage",
+    "check-locales": "node tools/check-locales.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "claude",
+    "claude-desktop",
+    "chinese",
+    "i18n",
+    "l10n",
+    "zh-CN",
+    "汉化"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_GITHUB_NAME/claude-desktop-zh.git"
+  }
+}
