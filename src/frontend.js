@@ -51,6 +51,7 @@ function patchDisplayNames(text) {
 const STRUCTURAL_LITERALS = new Set([
   'Search', 'Add', 'Copy', 'Check', 'Tasks', 'Settings', 'Command', 'Cancel', 'Sort', 'Voice',
   'Default', 'Arguments', 'Normal', 'All', 'Application', 'Medium', 'Motion', 'Thinking', 'Verbose',
+  'Software Engineer',
 ]);
 
 function isStructuralSource(source) {
@@ -110,6 +111,15 @@ function literalHash(source) {
   return crypto.createHash('sha256').update(source, 'utf8').digest('hex');
 }
 
+// hardcoded.json 只保存原文指纹，因此哈希规则也必须执行与明文规则相同的高危词过滤。
+const STRUCTURAL_HASHES = new Set(
+  [...STRUCTURAL_LITERALS].map((source) => `${Buffer.byteLength(source, 'utf8')}:${literalHash(source)}`),
+);
+
+function isStructuralHashSource(source) {
+  return STRUCTURAL_HASHES.has(`${Number(source.bytes)}:${String(source.sha256 || '').toLowerCase()}`);
+}
+
 function addHashedRule(hashed, source, target) {
   const bytes = Number(source.bytes);
   const hash = String(source.sha256 || '').toLowerCase();
@@ -133,6 +143,7 @@ function compileHardcodedRules(pairs) {
     const sourceValue = item[0];
     const target = String(item[1]);
     if (sourceValue && typeof sourceValue === 'object' && !Array.isArray(sourceValue)) {
+      if (isStructuralHashSource(sourceValue)) continue;
       addHashedRule(hashed, sourceValue, target);
       continue;
     }

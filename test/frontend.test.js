@@ -81,13 +81,28 @@ test('硬编码替换：跳过比较、对象键、图标/类型等程序语义�
 });
 
 test('硬编码替换：高危结构性短词与纯小写标识符不参与替换', () => {
+  const role = 'Software Engineer';
   const rules = frontend.compileHardcodedRules([
     ['Settings', '设置'],
     ['tokens', '令牌'],
     ['"Search"', '"搜索"'],
+    [{ sha256: frontend.literalHash(role), bytes: Buffer.byteLength(role) }, '软件工程师'],
   ]);
   assert.equal(rules.plain.size, 0);
+  assert.equal(rules.hashed.size, 0);
   assert.equal(rules.direct.length, 0);
+});
+
+test('硬编码替换：不改写连接器配置使用的职业枚举', () => {
+  const role = 'Software Engineer';
+  const rules = frontend.compileHardcodedRules([
+    [{ sha256: frontend.literalHash(role), bytes: Buffer.byteLength(role) }, '软件工程师'],
+  ]);
+  const src =
+    'var roles=["Sales","Software Engineer","Design"];' +
+    'var config={"Software Engineer":["Slack"]};' +
+    'roles.map(role=>[...config[role]])';
+  assert.equal(frontend.patchHardcoded(src, rules).text, src);
 });
 
 test('硬编码替换：含特殊字符的规则按原文直接替换', () => {
