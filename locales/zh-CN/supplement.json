@@ -1,6 +1,26 @@
 {
   "$comment": "本项目原创补充翻译（MIT），优先级高于 frontend/dynamic/desktop.json。",
-  "frontend": {},
+  "frontend": {
+    "Jj0DasG7Mx": "思考了 {seconds} 秒",
+    "4LM6AdGWNg": "思考了 {minutes} 分 {seconds} 秒",
+    "vFyvc213kN": "思考了 {minutes} 分钟",
+    "voTuOb/ijW": "思考了 {hours} 小时 {minutes} 分钟",
+    "MFx4UWu2HS": "思考了 {hours} 小时",
+    "zl6fNbo7RW": "思考过程",
+    "xIksaL4N9Q": "思考过程",
+    "o38caaOAJl": "思考了一下",
+    "QrZMdiKa7h": "正在思考…",
+    "JKbbmmrW33": "正在斟酌…",
+    "TvfUJeEeqK": "正在反思…",
+    "j97FqneaDa": "正在深入思考…",
+    "+OiyRgcyfz": "思考中的操作",
+    "oogxH3q75G": "思考",
+    "33dVpMzc7p": "还在继续思考…",
+    "LtdsUMPzL6": "继续思考…",
+    "fM2TbrcEIJ": "仍在思考…",
+    "2Fc6IvVyfr": "正在思考…",
+    "w3VoZRPW4Z": "思考即将完成…"
+  },
   "dynamic": {
     "gRa9I5BFc2": "Opus 消耗用量额度的速度比其他模型更快"
   },

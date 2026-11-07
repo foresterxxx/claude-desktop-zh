@@ -1,5 +1,7 @@
 'use strict';
 
+const crypto = require('crypto');
+
 // 前端 JS bundle 的文本级补丁：
 // 1. 语言白名单：在 ["en-US","de-DE","fr-FR","ko-KR","ja-JP",...] 数组中加入中文变体；
 // 2. 语言显示名：让 Intl.DisplayNames 对 zh-CN / zh-TW / zh-HK 返回中文名称；
@@ -104,18 +106,43 @@ function escapeForQuote(s, quote) {
   return out;
 }
 
+function literalHash(source) {
+  return crypto.createHash('sha256').update(source, 'utf8').digest('hex');
+}
+
+function addHashedRule(hashed, source, target) {
+  const bytes = Number(source.bytes);
+  const hash = String(source.sha256 || '').toLowerCase();
+  if (!Number.isSafeInteger(bytes) || bytes < 0 || !/^[0-9a-f]{64}$/.test(hash)) {
+    throw new Error('硬编码文案哈希规则无效');
+  }
+  let bucket = hashed.get(bytes);
+  if (!bucket) {
+    bucket = new Map();
+    hashed.set(bytes, bucket);
+  }
+  bucket.set(hash, target);
+}
+
 function compileHardcodedRules(pairs) {
   const plain = new Map();
+  const hashed = new Map();
   const direct = [];
   for (const item of pairs) {
     if (!Array.isArray(item) || item.length !== 2) continue;
-    const [source, target] = item.map(String);
+    const sourceValue = item[0];
+    const target = String(item[1]);
+    if (sourceValue && typeof sourceValue === 'object' && !Array.isArray(sourceValue)) {
+      addHashedRule(hashed, sourceValue, target);
+      continue;
+    }
+    const source = String(sourceValue);
     if (!source || source === target || isStructuralSource(source)) continue;
     if (isPlainUiText(source)) plain.set(source, target);
     else direct.push([source, target]);
   }
   direct.sort((a, b) => b[0].length - a[0].length);
-  return { plain, direct };
+  return { plain, hashed, direct };
 }
 
 // 单次扫描所有简单字符串字面量（不含转义和模板插值），命中词表则替换。
@@ -132,11 +159,15 @@ function patchHardcoded(text, rules) {
       out = parts.join(target);
     }
   }
-  if (rules.plain.size) {
+  if (rules.plain.size || rules.hashed?.size) {
     const src = out;
     out = src.replace(LITERAL_RE, (m, d, s, b, index) => {
       const content = d ?? s ?? b;
-      const target = rules.plain.get(content);
+      let target = rules.plain.get(content);
+      if (target === undefined && rules.hashed?.size) {
+        const bucket = rules.hashed.get(Buffer.byteLength(content, 'utf8'));
+        if (bucket) target = bucket.get(literalHash(content));
+      }
       if (target === undefined) return m;
       const end = index + m.length;
       if (isObjectKey(src, index, end) || isComparisonContext(src, index, end) || isStructuralContext(src, index)) return m;
@@ -156,6 +187,7 @@ module.exports = {
   DISPLAY_NAME_MARKER,
   compileHardcodedRules,
   patchHardcoded,
+  literalHash,
   isStructuralContext,
   isComparisonContext,
 };

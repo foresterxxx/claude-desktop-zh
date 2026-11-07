@@ -96,3 +96,31 @@ test('硬编码替换：含特殊字符的规则按原文直接替换', () => {
   assert.equal(r.text, 'x({defaultMessage:"名称",id:"abc"})');
   assert.equal(r.count, 1);
 });
+
+test('硬编码替换：哈希词表不保存英文原文也能替换展示文案', () => {
+  const source = 'Open settings';
+  const rules = frontend.compileHardcodedRules([
+    [{ sha256: frontend.literalHash(source), bytes: Buffer.byteLength(source) }, '打开设置'],
+  ]);
+  assert.equal(rules.plain.size, 0);
+  assert.equal(rules.hashed.size, 1);
+  const r = frontend.patchHardcoded('f({children:"Open settings"})', rules);
+  assert.equal(r.text, 'f({children:"打开设置"})');
+  assert.equal(r.count, 1);
+});
+
+test('硬编码替换：哈希词表仍跳过比较、对象键和结构性上下文', () => {
+  const source = 'Done';
+  const pair = [{ sha256: frontend.literalHash(source), bytes: Buffer.byteLength(source) }, '完成'];
+  const rules = frontend.compileHardcodedRules([pair]);
+  for (const text of ['x==="Done"', '{"Done":1}', 'p({type:"Done"})']) {
+    assert.equal(frontend.patchHardcoded(text, rules).text, text);
+  }
+});
+
+test('硬编码替换：无效哈希规则会报错', () => {
+  assert.throws(
+    () => frontend.compileHardcodedRules([[{ sha256: 'bad', bytes: 3 }, '坏规则']]),
+    /哈希规则无效/,
+  );
+});

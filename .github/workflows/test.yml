@@ -18,4 +18,5 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: node --test
+      - run: node tools/check-release.js
       - run: node bin/claude-zh.js --help

@@ -37,7 +37,49 @@ for (const lang of Object.keys(locales.LANGUAGES)) {
     assert.ok(Array.isArray(pack.hardcoded));
     for (const item of pack.hardcoded) {
       assert.ok(Array.isArray(item) && item.length === 2, `${lang}/hardcoded.json 存在无效条目`);
+      const source = item[0];
+      assert.equal(typeof source, 'object', `${lang}/hardcoded.json 不应包含英文匹配原文`);
+      assert.match(source.sha256, /^[0-9a-f]{64}$/);
+      assert.ok(Number.isSafeInteger(source.bytes) && source.bytes > 0);
+      assert.equal(typeof item[1], 'string');
     }
+  });
+}
+
+const THINKING_LABEL_IDS = [
+  'Jj0DasG7Mx',
+  '4LM6AdGWNg',
+  'vFyvc213kN',
+  'voTuOb/ijW',
+  'MFx4UWu2HS',
+  'zl6fNbo7RW',
+  'xIksaL4N9Q',
+  'o38caaOAJl',
+  'QrZMdiKa7h',
+  'JKbbmmrW33',
+  'TvfUJeEeqK',
+  'j97FqneaDa',
+  '+OiyRgcyfz',
+  'oogxH3q75G',
+  '33dVpMzc7p',
+  'LtdsUMPzL6',
+  'fM2TbrcEIJ',
+  '2Fc6IvVyfr',
+  'w3VoZRPW4Z',
+];
+
+for (const lang of Object.keys(locales.LANGUAGES)) {
+  test(`语言包 ${lang} 覆盖思考状态标签`, () => {
+    const frontend = locales.loadPack(lang).frontend;
+    for (const id of THINKING_LABEL_IDS) {
+      assert.equal(typeof frontend[id], 'string', `${lang} 缺少思考状态标签 ${id}`);
+      assert.doesNotMatch(frontend[id], /\b(?:Thinking|Thought|Pondering|Reflecting|Ruminating)\b/i);
+    }
+    assert.match(frontend.Jj0DasG7Mx, /\{seconds\}/);
+    assert.match(frontend['4LM6AdGWNg'], /\{minutes\}.*\{seconds\}/);
+    assert.match(frontend['voTuOb/ijW'], /\{hours\}.*\{minutes\}/);
+    assert.match(frontend.QrZMdiKa7h, /^正在思考…$/);
+    assert.match(frontend['2Fc6IvVyfr'], /^正在思考…$/);
   });
 }
 

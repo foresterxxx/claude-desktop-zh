@@ -16,7 +16,7 @@
 | `locales/<lang>/frontend.json` | `resources/frontend-<lang>.json` | 前端界面翻译，原样收录 |
 | `locales/<lang>/dynamic.json` | `resources/dynamic-<lang>.json` | 前端动态词库翻译，原样收录 |
 | `locales/<lang>/desktop.json` | `resources/desktop-<lang>.json` | 桌面壳层翻译，原样收录 |
-| `locales/<lang>/hardcoded.json` | `resources/frontend-hardcoded-<lang>.json` | 硬编码文案映射，原样收录 |
+| `locales/<lang>/hardcoded.json` | `resources/frontend-hardcoded-<lang>.json` | 保留中文译文；英文匹配源转换为不可逆 SHA-256 指纹，不在本仓库分发 |
 | `src/frontend.js` 中的结构性词汇跳过表与图标/枚举上下文正则 | `scripts/install_windows.ps1` | 移植为 JavaScript，并增加了比较/对象键上下文保护 |
 | `src/integrity.js` 中 Claude.exe 完整性标记的几种写法、Electron Framework 摘要槽位算法 | `scripts/install_windows.ps1`、`scripts/patch_claude_zh_cn.py` | 思路参考，代码重新实现 |
 | `src/platform.js` 中 macOS ad-hoc 重签名流程（entitlements 处理、identifier 级 DR） | `scripts/patch_claude_zh_cn.py` | 思路参考，代码重新实现 |
@@ -64,5 +64,8 @@ SOFTWARE.
   与 Anthropic 无任何关联，也未获得其认可或支持。
 - 本项目**不包含、不分发** Claude Desktop 的任何程序文件或英文原始词库；
   所有补丁均在用户本机、基于用户自己安装的客户端生成。
+- 本项目不分发 Claude Desktop 的硬编码英文原文、官方 Logo 或客户端截图。
 - 修改客户端文件可能违反相关服务条款、导致数字签名失效或部分功能（如 Cowork 沙盒）不可用。
   请自行评估风险，使用本项目即表示你理解并接受这些风险。
+- 本项目的 MIT License 仅适用于贡献者有权许可的项目代码、文档和翻译，不授予任何第三方商标、
+  Claude Desktop 客户端或 Anthropic 界面素材的权利。详见 [LEGAL.md](LEGAL.md)。

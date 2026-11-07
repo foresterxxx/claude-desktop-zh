@@ -12,14 +12,23 @@
     "src/",
     "locales/",
     "scripts/",
+    "tools/check-locales.js",
+    "tools/check-release.js",
+    "tools/hash-hardcoded.js",
+    "install-windows.bat",
+    "install-mac.command",
+    "uninstall-windows.bat",
+    "uninstall-mac.command",
     "LICENSE",
+    "LEGAL.md",
     "NOTICE.md",
     "README.md"
   ],
   "scripts": {
     "test": "node --test",
     "coverage": "node bin/claude-zh.js coverage",
-    "check-locales": "node tools/check-locales.js"
+    "check-locales": "node tools/check-locales.js",
+    "check-release": "node tools/check-release.js"
   },
   "engines": {
     "node": ">=18"

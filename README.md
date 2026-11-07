@@ -3,19 +3,19 @@
 > Claude Desktop 中文界面补丁：简体中文 / 繁體中文（台灣）/ 繁體中文（香港）
 > 零依赖 · 自动备份 · 一键恢复 · 可重复运行
 
-![Claude Desktop 中文界面（Windows）](docs/images/screenshot-windows-zh-CN.png)
-
 [![tests](https://github.com/YOUR_GITHUB_NAME/claude-desktop-zh/actions/workflows/test.yml/badge.svg)](https://github.com/YOUR_GITHUB_NAME/claude-desktop-zh/actions/workflows/test.yml)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 ![node](https://img.shields.io/badge/node-%3E%3D18-green)
 
 > [!IMPORTANT]
 > 本项目是社区非官方项目，与 Anthropic 无关。它会修改本机 Claude Desktop 的程序文件，
-> 请先阅读下方[注意事项](#注意事项与已知限制)。
+> 请先阅读下方[注意事项](#注意事项与已知限制)和[法律与商标说明](LEGAL.md)。
 
 ## 特性
 
 - **覆盖全面**：前端界面 40,000+ 词条（当前版本覆盖率 99.9%）、桌面壳层（菜单、托盘、系统对话框）99.7%。
+- **思考状态中文化**：覆盖“正在思考”“思考过程”“思考了多久”“继续思考”等状态与辅助标签。
+  模型实时生成的思考正文属于模型输出，不是客户端界面文本，因此不受本补丁影响。
 - **安全可逆**：首次安装自动备份原版文件；任何时候都能一键恢复到与官方逐字节一致的状态。
 - **可重复运行**：每次都基于原版备份重新生成补丁，切换语言、升级补丁都不会叠加修改。
 - **先生成、再写入**：所有文件先在临时目录生成并校验，确认无误后才写入安装目录；写入失败自动回滚。
@@ -23,6 +23,8 @@
   并同步 Electron 的 ASAR 完整性哈希（Windows：`claude.exe`；macOS：`Info.plist` + Electron Framework）。
 - **零依赖**：只需要 Node.js 18+，不需要 `npm install`。
 - **新版本友好**：客户端新增但尚未翻译的词条自动保留英文，不会出现空白；附带覆盖率统计与未翻译条目导出工具。
+- **不分发客户端内容**：仓库不包含 Claude Desktop 程序文件、官方英文词库或硬编码英文原文；
+  可选硬编码翻译使用不可逆 SHA-256 指纹在用户本机匹配。
 
 ## 支持情况
 
@@ -74,6 +76,16 @@ node bin/claude-zh.js coverage                # 统计当前客户端版本的�
 | `--dry-run` | 只生成补丁文件，不修改安装目录 |
 | `--out <文件>` | 配合 `coverage`，导出未翻译条目 |
 
+## 卸载与恢复
+
+卸载补丁会从首次安装时创建的备份恢复官方原版文件、把界面语言改回 `en-US`，并清理本工具的备份与状态记录。
+
+- Windows：双击 `uninstall-windows.bat`，在 UAC 弹窗中允许管理员权限。
+- macOS：双击 `uninstall-mac.command`，需要时输入登录密码。
+- 命令行：完全退出 Claude Desktop 后运行 `node bin/claude-zh.js restore`；也可加 `--kill` 自动关闭。
+
+如果 Claude Desktop 已升级，旧版本备份不会写回新版本客户端，工具只会清理已经失效的旧记录。
+
 ## Claude 更新之后
 
 Claude Desktop 自动更新会用官方文件覆盖补丁，界面恢复英文。更新本项目后重新运行一次安装即可；
@@ -107,11 +119,17 @@ Claude Desktop 自动更新会用官方文件覆盖补丁，界面恢复英文�
   或使用 `--no-override` 安装（仅新增独立语言，但在部分版本可能无法稳定生效）。
 - **在线页面**：登录页等从 claude.ai 在线加载的页面不受本补丁影响。
 - 修改客户端可能违反相关服务条款，请自行评估风险。
+- 本项目的 MIT License 不授予 Claude、Anthropic 等第三方商标、客户端界面或其他第三方材料的权利；
+  详见 [LEGAL.md](LEGAL.md)。
 
 ## 常见问题
 
 **安装后仍是英文？** 完全退出 Claude（托盘图标也要退出）后重新打开；或在左下角账号菜单 → Language 中选择中文。
 用 `node bin/claude-zh.js status` 检查状态。
+
+**为什么思考正文仍然是英文？** 本补丁会翻译“正在思考”“思考过程”“思考了 5 秒”等客户端界面标签，
+但思考正文和普通回复一样，是模型实时生成的内容，不在 Claude Desktop 的本地词库中。其语言由模型、对话上下文和提示词决定，
+客户端汉化补丁无法改写。
 
 **提示“Claude.exe 中找不到完整性标记”或“没有找到语言白名单”？** 说明客户端格式发生变化，
 请附上 `status` 输出和 Claude 版本号到 Issues 反馈。此时安装目录不会被修改。
@@ -127,6 +145,7 @@ Claude Desktop 自动更新会用官方文件覆盖补丁，界面恢复英文�
 ```bash
 npm test                                 # 单元测试（只使用合成数据，不触碰已安装的客户端）
 node tools/check-locales.js              # 对照本机客户端检查译文中的 ICU 占位符
+node tools/check-release.js              # 检查发布物中是否混入客户端文件、明文匹配源或密钥
 node bin/claude-zh.js coverage --out missing.json   # 导出未翻译条目
 ```
 

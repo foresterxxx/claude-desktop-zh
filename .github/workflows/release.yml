@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: 22
       - run: node --test
+      - run: node tools/check-release.js
       - name: Build package
         run: |
           name="claude-desktop-zh-${GITHUB_REF_NAME}"

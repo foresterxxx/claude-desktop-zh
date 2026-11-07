@@ -5,10 +5,10 @@
 //   frontend.json   前端（ion-dist/i18n/<lang>.json）  key -> 译文
 //   dynamic.json    前端动态词库（ion-dist/i18n/dynamic/<lang>.json）
 //   desktop.json    桌面壳层（app.asar/resources/i18n/<lang>.json）
-//   hardcoded.json  前端未走 i18n 的硬编码文案 [[英文, 译文], ...]（可选）
+//   hardcoded.json  前端未走 i18n 的硬编码文案 [[{sha256, bytes}, 译文], ...]（可选）
 //   supplement.json 本项目原创的补充翻译 { frontend, dynamic, desktop }，优先级最高（可选）
 //
-// frontend/dynamic/desktop/hardcoded.json 源自 javaht/claude-desktop-zh-cn（MIT），见 NOTICE.md。
+// frontend/dynamic/desktop 与 hardcoded 的译文源自 javaht/claude-desktop-zh-cn（MIT），见 NOTICE.md。
 
 const fs = require('fs');
 const path = require('path');
