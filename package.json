@@ -1,6 +1,6 @@
 {
   "name": "claude-desktop-zh",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Claude Desktop 中文界面补丁（简体中文 / 繁體中文），零依赖、可一键恢复",
   "license": "MIT",
   "bin": {
