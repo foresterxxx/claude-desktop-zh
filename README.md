@@ -3,7 +3,7 @@
 > Claude Desktop 中文界面补丁：简体中文 / 繁體中文（台灣）/ 繁體中文（香港）
 > 零依赖 · 自动备份 · 一键恢复 · 可重复运行
 
-[![tests](https://github.com/YOUR_GITHUB_NAME/claude-desktop-zh/actions/workflows/test.yml/badge.svg)](https://github.com/YOUR_GITHUB_NAME/claude-desktop-zh/actions/workflows/test.yml)
+[![tests](https://github.com/foresterxxx/claude-desktop-zh/actions/workflows/test.yml/badge.svg)](https://github.com/foresterxxx/claude-desktop-zh/actions/workflows/test.yml)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 ![node](https://img.shields.io/badge/node-%3E%3D18-green)
 
